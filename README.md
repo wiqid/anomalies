@@ -1,6 +1,8 @@
 # anomalies
 a wiqid collection of free modules for [vcv rack](https://vcvrack.com/)
 
+currently in open beta
+
 ## 2hp chaotic lfo series
 
 these are small lfo modules using various strange attractors for chaotic
@@ -39,7 +41,7 @@ averages from the outputs to the left of them.
 
 ## dual attenuverter
 
-a 2hp module with two attenuverters (-3x to +3x) with offset (-10v to +10v).
+a 2hp module with two attenuverters (-3x to +3x) with offset (±10v).
 these are both polyphonic.
 
 ## expanse
