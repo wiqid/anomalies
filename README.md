@@ -1,7 +1,7 @@
 # anomalies
 a wiqid collection of free modules for [vcv rack](https://vcvrack.com/)
 
-== 2hp chaotic lfo series ==
+## 2hp chaotic lfo series
 
 these are small lfo modules using various strange attractors for chaotic
 outputs. a strange attractor is a mathematical system of equations with chaotic
@@ -17,7 +17,8 @@ range of output voltages. by default the scale is set to a standard bipolar ±5v
 modulation cv range. fully clockwise it goes up to ±10v, and counterclockwise
 down to ±0.1v.
 
-=== warning ===
+### warning
+
 as we are using chaotic systems, the output is not guaranteed to stay within the
 set range and will occasionally go higher or lower. especially the sakarya
 module can be wildly chaotic and may crash, needing a restart. if it is
@@ -29,18 +30,18 @@ offset to usable lfo voltages. the t output is my invention, as a "mysterious
 fourth dimension" using the formula x+y-z, resulting in another chaotic
 output.
 
-== languor ==
+## languor
 
 this 8hp module combines several chaotic lfos at different speeds.
 it is inspired by the triple sloths eurorack module by nonlinearcircuits.
 the inputs expect bipolar ±5v modulation cv. the rightmost outputs are weighted
 averages from the outputs to the left of them.
 
-== dual attenuverter ==
+## dual attenuverter
 
 a 2hp module with two attenuverters (-3x to +3x) with offset (-10v to +10v).
 these are both polyphonic.
 
-== expanse ==
+## expanse
 
 this is a resizable blank module in a wiqid color.
