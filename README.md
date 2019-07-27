@@ -49,3 +49,9 @@ these are both polyphonic.
 ## expanse
 
 this is a resizable blank module in a wiqid color.
+
+## full scope black edition
+
+this is a full-sized scope, based on jw modules' full scope, but with a black
+background, and with stats that can be toggled from the right-click menu. the
+menu also offers the option to switch between lissajous mode and waveform mode.
