@@ -24,8 +24,8 @@ down to ±0.1v.
 ### warning
 
 as we are using chaotic systems, the output is not guaranteed to stay within the
-set range and will occasionally go higher or lower. especially the sakarya
-module can be wildly chaotic and may crash, needing a restart. if it is
+set range and will occasionally go higher or lower. (especially the sakarya
+module can be wildly chaotic and may freeze, needing a restart.) if it is
 important that the output does not go outside the set range, then it is advised
 to put a limiter or clamp module on the output.
 

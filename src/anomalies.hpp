@@ -118,6 +118,34 @@ struct OutPort : app::SvgPort {
     }
 };
 
+////////// full scope components //////////
+
+struct KnobMini : app::SvgKnob {
+    KnobMini() {
+        minAngle = -0.83 * M_PI;
+        maxAngle = 0.83 * M_PI;
+        setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/component/knob_mini.svg")));
+    }
+};
+
+struct KnobMiniSnap : KnobMini {
+    KnobMiniSnap() {
+        snap = true;
+    }
+};
+
+struct InPortMini : app::SvgPort {
+    InPortMini() {
+        setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/component/inport_mini_sc.svg")));
+    }
+};
+
+struct Logo : app::SvgScrew {
+	Logo() {
+		setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/face/wiqid-logo-10.svg")));
+	}
+};
+
 
 // Declare each Model, defined in each module source file
 // extern Model *modelMyModule;
@@ -130,3 +158,4 @@ extern Model *modelSakarya;
 extern Model *modelDadras;
 extern Model *modelSprottLinzF;
 extern Model *modelDualAttenuverter;
+extern Model *modelFullScope;

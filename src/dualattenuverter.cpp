@@ -25,9 +25,9 @@ struct DualAttenuverter : Module {
     DualAttenuverter() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
 		configParam(A_SCALE_PARAM, -3.0f, 3.0f, 1.0f, "scale");
-		configParam(A_OFFSET_PARAM, -10.0f, 10.0f, 0.0f, "offset", " V");
+		configParam(A_OFFSET_PARAM, -10.0f, 10.0f, 0.0f, "offset", " v");
 		configParam(B_SCALE_PARAM, -3.0f, 3.0f, 1.0f, "scale");
-		configParam(B_OFFSET_PARAM, -10.0f, 10.0f, 0.0f, "offset", " V");
+		configParam(B_OFFSET_PARAM, -10.0f, 10.0f, 0.0f, "offset", " v");
     }
     void process(const ProcessArgs &args) override;
 };

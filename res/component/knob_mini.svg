@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="22"
-   height="22"
-   viewBox="0 0 22 22"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
    fill="none"
    version="1.1"
    id="svg103"
-   sodipodi:docname="knob_s.svg"
+   sodipodi:docname="knob_mini.svg"
    inkscape:version="1.0alpha2 (4ce689b25c, 2019-06-24)">
   <metadata
      id="metadata109">
@@ -38,43 +38,45 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1783"
-     inkscape:window-height="1045"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
      id="namedview105"
      showgrid="false"
-     inkscape:zoom="30.341309"
-     inkscape:cx="13.979699"
-     inkscape:cy="11.24478"
-     inkscape:window-x="124"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:zoom="15.839192"
+     inkscape:cx="1.0345356"
+     inkscape:cy="17.024657"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg103"
      inkscape:document-rotation="0" />
   <rect
-     width="22"
-     height="22"
+     width="16"
+     height="16"
      fill="white"
      id="rect95"
-     style="opacity:0" />
+     style="opacity:0;stroke-width:0.727273"
+     x="0"
+     y="0" />
   <circle
-     cx="11"
-     cy="11"
-     r="10.95"
+     cx="8"
+     cy="8"
+     r="7.9636364"
      fill="#AE91E8"
      stroke="black"
      stroke-width="0.1"
      id="circle97"
-     style="fill:#554d60;fill-opacity:1;stroke-width:0.3;stroke-miterlimit:4;stroke-dasharray:none" />
+     style="fill:#544d60;fill-opacity:1;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none" />
   <circle
-     cx="11"
-     cy="11"
-     r="8.1961689"
+     cx="8"
+     cy="8"
+     r="5.5"
      id="circle99"
-     style="fill:#3a3345;stroke:#211e29;stroke-width:0.2;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+     style="fill:#3a3345;fill-opacity:1;stroke:#211e29;stroke-width:0.134209;stroke-miterlimit:4;stroke-dasharray:none" />
   <circle
-     cx="11"
-     cy="1.4284588"
-     r="1.3570359"
+     cx="8"
+     cy="1.2656506"
+     r="1.2"
      id="circle101"
-     style="fill:#ae91e8;stroke:#211e29;stroke-width:0.14;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+     style="fill:#ae91e8;fill-opacity:1;stroke:#211e29;stroke-width:0.1238;stroke-miterlimit:4;stroke-dasharray:none" />
 </svg>
