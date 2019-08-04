@@ -98,12 +98,28 @@ struct KnobS : app::SvgKnob {
     }
 };
 
+struct KnobSSnap : KnobS {
+    KnobSSnap() {
+        snap = true;
+    	smooth = false;
+    }
+};
+
 struct KnobM : app::SvgKnob {
     KnobM() {
         minAngle = -0.83 * M_PI;
         maxAngle = 0.83 * M_PI;
         setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/component/knob_m.svg")));
     }
+};
+
+struct PushButtonS : app::SvgSwitch {
+	PushButtonS() {
+		momentary = true;
+		shadow->opacity = 0;
+		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/component/push_s.svg")));
+		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/component/push_s_down.svg")));
+	}
 };
 
 struct InPort : app::SvgPort {
@@ -159,3 +175,4 @@ extern Model *modelDadras;
 extern Model *modelSprottLinzF;
 extern Model *modelDualAttenuverter;
 extern Model *modelFullScope;
+// extern Model *modelClock;
