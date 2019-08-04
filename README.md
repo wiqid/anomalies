@@ -1,9 +1,7 @@
 # anomalies
 a wiqid collection of free modules for [vcv rack](https://vcvrack.com/)
 
-currently in open beta
-
-![screenshot](https://github.com/wiqid/anomalies/blob/master/img/anomalies-beta1.jpg)
+![screenshot](https://github.com/wiqid/anomalies/blob/master/img/anomalies-110.jpg)
 
 ## 2hp chaotic lfo series
 
