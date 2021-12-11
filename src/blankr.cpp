@@ -14,10 +14,23 @@ struct BlankR : Module {
         NUM_LIGHTS
     };
 
+    float width = RACK_GRID_WIDTH * 6;
+
     BlankR() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
     }
     void process(const ProcessArgs &args) override { }
+
+    json_t *dataToJson() override {
+        json_t *rootJ = json_object();
+        json_object_set_new(rootJ, "width", json_real(width));
+        return rootJ;
+    }
+
+    void dataFromJson(json_t *rootJ) override {
+        json_t *widthJ = json_object_get(rootJ, "width");
+        if (widthJ) width = json_number_value(widthJ);
+    }
 };
 
 struct BlankRWidget : ModuleWidget {
@@ -26,7 +39,7 @@ struct BlankRWidget : ModuleWidget {
 
     BlankRWidget(BlankR *module) {
         setModule(module);
-        box.size = Vec(6 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
+        box.size = Vec(module ? module->width : RACK_GRID_WIDTH * 6, RACK_GRID_HEIGHT);
         panel = new BlankPanel(COLOR_PURPLE_DARK);
         panel->box.size = box.size;
         addChild(panel);
@@ -41,26 +54,11 @@ struct BlankRWidget : ModuleWidget {
 
     void step() override {
         panel->box.size = box.size;
+        if (box.size.x < RACK_GRID_WIDTH * 6) box.size.x = RACK_GRID_WIDTH * 6;
         rightHandle->box.pos.x = box.size.x - rightHandle->box.size.x;
+        BlankR *blankR = dynamic_cast<BlankR*>(module);
+        if (blankR) blankR->width = box.size.x;
         ModuleWidget::step();
-    }
-
-    json_t *toJson() override {
-		json_t *rootJ = ModuleWidget::toJson();
-
-		// width
-		json_object_set_new(rootJ, "width", json_real(box.size.x));
-
-		return rootJ;
-	}
-
-	void fromJson(json_t *rootJ) override {
-		ModuleWidget::fromJson(rootJ);
-
-		// width
-		json_t *widthJ = json_object_get(rootJ, "width");
-		if (widthJ)
-			box.size.x = json_number_value(widthJ);
     }
 };
 
