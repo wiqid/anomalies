@@ -18,7 +18,6 @@ struct FullScope : Module {
 	enum InputIds {
 		X_INPUT,
 		Y_INPUT,
-		TRIG_INPUT,
 		COLOR_INPUT,
 		TIME_INPUT,
 		ROTATION_INPUT,
@@ -49,7 +48,13 @@ struct FullScope : Module {
 		configParam(Y_SCALE_PARAM, -2.f, 8.f, 0.f, "y scale", " v", 1/2.f, 10);
 		configParam(ROTATION_PARAM, -10.0, 10.0, 0, "rotation");
 		configParam(TIME_PARAM, 4.f, 16.f, 10.f, "time");
+		configInput(X_INPUT, "x");
+		configInput(Y_INPUT, "y");
+		configInput(COLOR_INPUT, "color cv");
+		configInput(TIME_INPUT, "time cv");
+		configInput(ROTATION_INPUT, "rotation cv");
 	}
+
 	void process(const ProcessArgs &args) override;
 
 	json_t *dataToJson() override {

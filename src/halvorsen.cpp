@@ -38,7 +38,12 @@ struct Halvorsen : Module {
 		configParam(SPEED_PARAM, SPEED_PARAM_MIN, SPEED_PARAM_MAX, HalvorsenAttractor::DEFAULT_SPEED, "speed");
 		configParam(SHAPE_PARAM, SHAPE_PARAM_MIN, SHAPE_PARAM_MAX, HalvorsenAttractor::DEFAULT_A, "shape");
 		configParam(AMP_PARAM, AMP_PARAM_MIN, AMP_PARAM_MAX, AMP_PARAM_DEFAULT, "scale");
+		configOutput(X_OUTPUT, "x");
+		configOutput(Y_OUTPUT, "y");
+		configOutput(Z_OUTPUT, "z");
+		configOutput(T_OUTPUT, "t factor");		
     }
+    
     void process(const ProcessArgs &args) override;
 };
 
@@ -63,7 +68,7 @@ struct HalvorsenWidget : ModuleWidget {
     HalvorsenWidget(Halvorsen *module) {
         setModule(module);
         box.size = Vec(2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/face/hal.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/face/hal.svg")));
 
 		addParam(createParam<KnobS>(Vec(4, 35), module, Halvorsen::SPEED_PARAM));
 		addParam(createParam<KnobS>(Vec(4, 85), module, Halvorsen::SHAPE_PARAM));
