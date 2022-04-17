@@ -60,7 +60,27 @@ struct Languor : Module {
 		configParam(SPEED_PARAM, SPEED_PARAM_MIN, SPEED_PARAM_MAX, SPEED_PARAM_DEFAULT, "speed");
 		configParam(SHAPE_PARAM, SHAPE_PARAM_MIN, SHAPE_PARAM_MAX, SHAPE_PARAM_DEFAULT, "shape");
 		configParam(AMP_PARAM, AMP_PARAM_MIN, AMP_PARAM_MAX, AMP_PARAM_DEFAULT, "scale");
+		configInput(SPEED_INPUT, "speed cv");
+		configInput(SHAPE_INPUT, "shape cv");
+		configInput(AMP_INPUT, "scale cv");
+		configOutput(HX_OUTPUT, "halvorsen x");
+		configOutput(HY_OUTPUT, "halvorsen y");
+		configOutput(HZ_OUTPUT, "halvorsen z");
+		configOutput(HT_OUTPUT, "halvorsen t");
+		configOutput(DX_OUTPUT, "dadras x");
+		configOutput(DY_OUTPUT, "dadras y");
+		configOutput(DZ_OUTPUT, "dadras z");
+		configOutput(DT_OUTPUT, "dadras t");
+		configOutput(LX_OUTPUT, "lorenz x");
+		configOutput(LY_OUTPUT, "lorenz y");
+		configOutput(LZ_OUTPUT, "lorenz z");
+		configOutput(LT_OUTPUT, "lorenz t");
+		configOutput(AX_OUTPUT, "average x");
+		configOutput(AY_OUTPUT, "average y");
+		configOutput(AZ_OUTPUT, "average z");
+		configOutput(AT_OUTPUT, "average t");
 	}
+
 	void process(const ProcessArgs &args) override;
 };
 
@@ -132,7 +152,7 @@ struct LanguorWidget : ModuleWidget {
 	LanguorWidget(Languor *module) {
 		setModule(module);
 		box.size = Vec(8 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/face/languor.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/face/languor.svg")));
 
 		addParam(createParam<KnobM>(Vec(7.5, 53), module, Languor::SPEED_PARAM));
 		addParam(createParam<KnobM>(Vec(45, 53), module, Languor::SHAPE_PARAM));

@@ -18,7 +18,6 @@ struct FullScope : Module {
 	enum InputIds {
 		X_INPUT,
 		Y_INPUT,
-		TRIG_INPUT,
 		COLOR_INPUT,
 		TIME_INPUT,
 		ROTATION_INPUT,
@@ -35,6 +34,7 @@ struct FullScope : Module {
 	float bufferY[BUFFER_SIZE] = {};
 	int bufferIndex = 0;
 	float frameIndex = 0;
+	float width = 26 * RACK_GRID_WIDTH;
 
 	bool lissajous = true;
 	bool showstats = false;
@@ -48,13 +48,20 @@ struct FullScope : Module {
 		configParam(Y_SCALE_PARAM, -2.f, 8.f, 0.f, "y scale", " v", 1/2.f, 10);
 		configParam(ROTATION_PARAM, -10.0, 10.0, 0, "rotation");
 		configParam(TIME_PARAM, 4.f, 16.f, 10.f, "time");
+		configInput(X_INPUT, "x");
+		configInput(Y_INPUT, "y");
+		configInput(COLOR_INPUT, "color cv");
+		configInput(TIME_INPUT, "time cv");
+		configInput(ROTATION_INPUT, "rotation cv");
 	}
+
 	void process(const ProcessArgs &args) override;
 
 	json_t *dataToJson() override {
 		json_t *rootJ = json_object();
 		json_object_set_new(rootJ, "lissajous", json_integer((int) lissajous));
 		json_object_set_new(rootJ, "showstats", json_integer((int) showstats));
+		json_object_set_new(rootJ, "width", json_real(width));
 		return rootJ;
 	}
 
@@ -66,6 +73,10 @@ struct FullScope : Module {
 		json_t *statJ = json_object_get(rootJ, "showstats");
 		if (statJ)
 			showstats = json_integer_value(statJ);
+
+		json_t *widthJ = json_object_get(rootJ, "width");
+		if (widthJ)
+			width = json_number_value(widthJ);
 	}
 
 	void onReset() override {
@@ -145,9 +156,7 @@ struct FullScopeDisplay : TransparentWidget {
 	};
 	Stats statsX, statsY;
 
-	FullScopeDisplay() {
-		font = APP->window->loadFont(asset::plugin(pluginInstance, "res/font/OfficeCodePro-Light.ttf"));
-	}
+	FullScopeDisplay() {}
 
 	inline float rescalefjw(float x, float xMin, float xMax, float yMin, float yMax) {
 		return yMin + (x - xMin) / (xMax - xMin) * (yMax - yMin);
@@ -199,7 +208,9 @@ struct FullScopeDisplay : TransparentWidget {
 	}
 
 	void drawStats(const DrawArgs &args, Vec pos, const char *title, Stats *stats) {
-		nvgFontSize(args.vg, 11);
+		font = APP->window->loadFont(asset::plugin(pluginInstance, "res/font/OfficeCodePro-Light.ttf"));
+		if (!font) return;
+		nvgFontSize(args.vg, 12);
 		nvgFontFaceId(args.vg, font->handle);
 		nvgTextLetterSpacing(args.vg, -0.5);
 
@@ -218,8 +229,8 @@ struct FullScopeDisplay : TransparentWidget {
 		nvgText(args.vg, pos.x + 55, pos.y, text.c_str(), NULL);
 	}
 
-	void draw(const DrawArgs &args) override {
-		if(!module) return;
+	void drawLayer(const DrawArgs &args, int layer) override {
+		if(!module || layer != 1) return;
 
 		float gainX = powf(2.0, roundf(module->params[FullScope::X_SCALE_PARAM].getValue()));
 		float gainY = powf(2.0, roundf(module->params[FullScope::Y_SCALE_PARAM].getValue()));
@@ -286,15 +297,12 @@ struct FullScopeWidget : ModuleWidget {
 	TransparentWidget *display;
 	FullScopeWidget(FullScope *module);
 	void step() override;
-	json_t *toJson() override;
-	void fromJson(json_t *rootJ) override;
 	void appendContextMenu(Menu *menu) override;
 };
 
 FullScopeWidget::FullScopeWidget(FullScope *module) {
 	setModule(module);
-	box.size = Vec(26 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-
+	box.size = Vec(module ? module->width : RACK_GRID_WIDTH * 26, RACK_GRID_HEIGHT);
     panel = new BlankPanel(COLOR_BLACK);
 	panel->box.size = box.size;
 	addChild(panel);
@@ -332,55 +340,20 @@ FullScopeWidget::FullScopeWidget(FullScope *module) {
 
 void FullScopeWidget::step() {
 	panel->box.size = box.size;
+	if (box.size.x < RACK_GRID_WIDTH * 13) box.size.x = RACK_GRID_WIDTH * 13;
 	display->box.size = Vec(box.size.x, box.size.y);
 	rightHandle->box.pos.x = box.size.x - rightHandle->box.size.x;
+	FullScope *fullscope = dynamic_cast<FullScope*>(module);
+	if (fullscope) fullscope->width = box.size.x;
 	ModuleWidget::step();
 }
-
-json_t *FullScopeWidget::toJson() {
-	json_t *rootJ = ModuleWidget::toJson();
-	json_object_set_new(rootJ, "width", json_real(box.size.x));
-	json_object_set_new(rootJ, "height", json_real(box.size.y));
-	return rootJ;
-}
-
-void FullScopeWidget::fromJson(json_t *rootJ) {
-	ModuleWidget::fromJson(rootJ);
-	json_t *widthJ = json_object_get(rootJ, "width");
-	if (widthJ)
-		box.size.x = json_number_value(widthJ);
-	json_t *heightJ = json_object_get(rootJ, "height");
-	if (heightJ)
-		box.size.y = json_number_value(heightJ);
-}
-
-struct FullScopeLissajousModeMenuItem : MenuItem {
-	FullScope *fullScope;
-	void onAction(const event::Action &e) override {
-		fullScope->lissajous ^= true;
-	}
-};
-
-struct StatsMenuItem : MenuItem {
-	FullScope *fullScope;
-	void onAction(const event::Action &e) override {
-		fullScope->showstats ^= true;
-	}
-};
 
 void FullScopeWidget::appendContextMenu(Menu *menu) {
 	FullScope *fullScope = dynamic_cast<FullScope*>(module);
 	assert(fullScope);
-
 	menu->addChild(new MenuSeparator());
-
-	FullScopeLissajousModeMenuItem *lissMenuItem = createMenuItem<FullScopeLissajousModeMenuItem>("lissajous mode", CHECKMARK(fullScope->lissajous));
-	lissMenuItem->fullScope = fullScope;
-	menu->addChild(lissMenuItem);
-
-	StatsMenuItem *statItem = createMenuItem<StatsMenuItem>("show statistics", CHECKMARK(fullScope->showstats));
-	statItem->fullScope = fullScope;
-	menu->addChild(statItem);
+	menu->addChild(createBoolPtrMenuItem("Lissajous mode", "", &fullScope->lissajous));
+	menu->addChild(createBoolPtrMenuItem("Show statistics", "", &fullScope->showstats));
 }
 
 Model *modelFullScope = createModel<FullScope, FullScopeWidget>("fullscope");

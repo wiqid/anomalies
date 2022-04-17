@@ -28,7 +28,12 @@ struct DualAttenuverter : Module {
 		configParam(A_OFFSET_PARAM, -10.0f, 10.0f, 0.0f, "offset", " v");
 		configParam(B_SCALE_PARAM, -3.0f, 3.0f, 1.0f, "scale");
 		configParam(B_OFFSET_PARAM, -10.0f, 10.0f, 0.0f, "offset", " v");
+		configInput(A_INPUT, "a");
+		configInput(B_INPUT, "b");
+		configOutput(A_OUTPUT, "a");
+		configOutput(B_OUTPUT, "b");
     }
+
     void process(const ProcessArgs &args) override;
 };
 
@@ -57,7 +62,7 @@ struct DualAttenuverterWidget : ModuleWidget {
     DualAttenuverterWidget(DualAttenuverter *module) {
         setModule(module);
         box.size = Vec(2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/face/2at.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/face/2at.svg")));
 
 		addParam(createParam<KnobS>(Vec(4, 28), module, DualAttenuverter::A_SCALE_PARAM));
 		addParam(createParam<KnobS>(Vec(4, 68), module, DualAttenuverter::A_OFFSET_PARAM));
